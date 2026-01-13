@@ -125,3 +125,30 @@
   cursor: pointer;
   padding: 0.3rem 0.6rem;
 }
+
+/* ===== Comments Section Styles ===== */
+
+.comments-section {
+  margin-top: 1rem;
+}
+
+.comments-section input {
+  width: 70%;
+  padding: 0.4rem;
+  margin-right: 0.5rem;
+}
+
+.comments-section button {
+  cursor: pointer;
+}
+
+.comments-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.comments-section li {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}

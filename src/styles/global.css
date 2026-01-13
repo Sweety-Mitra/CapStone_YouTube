@@ -1,4 +1,57 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+/* ===== YouTube Header Styles ===== */
+
+.yt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 100;
+}
+
+/* Left section */
+.yt-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-btn {
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.logo {
+  font-weight: bold;
+  color: red;
+}
+
+/* Center search bar */
+.yt-header-center {
+  display: flex;
+  width: 40%;
+}
+
+.yt-header-center input {
+  flex: 1;
+  padding: 0.4rem;
+}
+
+.yt-header-center button {
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+/* Right section */
+.signin-btn {
+  border: 1px solid #065fd4;
+  background: white;
+  color: #065fd4;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
 }

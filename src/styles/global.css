@@ -112,3 +112,16 @@
   background-color: black;
   color: white;
 }
+
+/* ===== Like / Dislike Styles ===== */
+
+.like-dislike {
+  display: flex;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.like-dislike button {
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+}

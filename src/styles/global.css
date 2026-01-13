@@ -55,3 +55,32 @@
   padding: 0.4rem 0.8rem;
   cursor: pointer;
 }
+
+/* ===== Sidebar Styles ===== */
+
+.yt-sidebar {
+  width: 200px;
+  padding-top: 1rem;
+  border-right: 1px solid #ddd;
+  background-color: #fff;
+}
+
+/* Individual sidebar items */
+.sidebar-item {
+  display: block;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.sidebar-item:hover {
+  background-color: #f2f2f2;
+}
+
+/* Active page highlight */
+.sidebar-item.active {
+  background-color: #e5e5e5;
+  font-weight: bold;
+}

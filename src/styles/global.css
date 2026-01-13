@@ -90,3 +90,25 @@
   height: calc(100vh - 60px); /* full height minus header */
   overflow-y: auto;
 }
+
+/* ===== Filter Bar Styles ===== */
+
+.filter-bar {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 16px;
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+/* Active filter button */
+.filter-btn.active {
+  background-color: black;
+  color: white;
+}

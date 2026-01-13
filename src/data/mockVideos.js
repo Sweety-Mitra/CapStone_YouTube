@@ -1,4 +1,3 @@
-// mockVideos.js
 // This file contains temporary video data for frontend development
 // Each video now includes a category field for filtering
 

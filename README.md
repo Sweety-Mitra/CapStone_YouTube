@@ -100,11 +100,14 @@ The application replicates core YouTube features such as video browsing, user au
 ```bash
 git clone https://github.com/Sweety-Mitra/CapStone_YouTube.git
 cd YouTube
+```
 
 ## 🖥️ Running the Server
 ```bash
 cd server
+````
 
 ### Install dependencies
 ```bash
 npm install
+```

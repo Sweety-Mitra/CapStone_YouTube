@@ -84,3 +84,9 @@
   background-color: #e5e5e5;
   font-weight: bold;
 }
+
+/* Make sidebar scrollable if content overflows */
+.yt-sidebar {
+  height: calc(100vh - 60px); /* full height minus header */
+  overflow-y: auto;
+}

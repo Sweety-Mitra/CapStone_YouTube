@@ -1,17 +1,16 @@
-// Central express app configuration
-
 import express from "express";
 import cors from "cors";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 
-// Enable CORS for frontend requests
 app.use(cors());
-
-// Parse incoming JSON
 app.use(express.json());
 
-// Health check route
+// Auth routes
+app.use("/api/auth", authRoutes);
+
+// Health check
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });

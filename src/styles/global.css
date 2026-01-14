@@ -152,3 +152,36 @@
   justify-content: space-between;
   margin-top: 0.5rem;
 }
+
+/* ===== Auth Pages ===== */
+
+.auth-container {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+}
+
+.auth-container h2 {
+  text-align: center;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.auth-container input {
+  padding: 0.5rem;
+}
+
+.auth-container button {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.9rem;
+}

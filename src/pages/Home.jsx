@@ -20,6 +20,7 @@ const Home = () => {
 
   // State to track selected category
   const [activeCategory, setActiveCategory] = useState("All");
+  const [searchText, setSearchText] = useState("");
 
   // Filter videos based on selected category
   const filteredVideos =
@@ -28,6 +29,13 @@ const Home = () => {
       : mockVideos.filter(
           (video) => video.category === activeCategory
         );
+
+  // Filter by search text
+  if (searchText.trim()) {
+    filteredVideos = filteredVideos.filter((video) =>
+      video.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }
 
   return (
     <MainLayout>

@@ -7,6 +7,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 const MainLayout = ({ children }) => {
   // State to control sidebar visibility
   const [showSidebar, setShowSidebar] = useState(true);
+  const [searchText, setSearchText] = useState("");
 
   // Toggle function passed to Header
   const toggleSidebar = () => {
@@ -15,15 +16,18 @@ const MainLayout = ({ children }) => {
 
   return (
     <>
-      {/* Header receives toggle function */}
-      <Header onMenuClick={toggleSidebar} />
+      <Header
+        onMenuClick={toggleSidebar}
+        searchText={searchText}
+        setSearchText={setSearchText}
+      />
 
       <div style={{ display: "flex" }}>
-        {/* Sidebar shown/hidden based on state */}
         {showSidebar && <Sidebar />}
 
-        {/* Main page content */}
-        <main style={{ padding: "1rem", flex: 1 }}>{children}</main>
+        <main style={{ padding: "1rem", flex: 1 }}>
+          {children}
+        </main>
       </div>
     </>
   );

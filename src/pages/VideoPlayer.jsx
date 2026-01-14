@@ -1,16 +1,19 @@
-// This page displays a selected video and its details
-// For now, we use mock data and frontend-only logic
+// This page reads the video ID from the URL
+// and passes it to the details component
 
+import { useParams } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import VideoPlayerDetails from "../components/video/VideoPlayerDetails";
 
 const VideoPlayer = () => {
+  // useParams reads values from the URL
+  // If URL is /video/1 → id = "1"
+  const { id } = useParams();
+
   return (
     <MainLayout>
-      {/* Wrapper for video player page */}
-      <div className="video-player-page">
-        <VideoPlayerDetails />
-      </div>
+      {/* Pass the video id to child component */}
+      <VideoPlayerDetails videoId={id} />
     </MainLayout>
   );
 };

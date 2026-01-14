@@ -1,0 +1,187 @@
+/* ===== YouTube Header Styles ===== */
+
+.yt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 100;
+}
+
+/* Left section */
+.yt-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-btn {
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.logo {
+  font-weight: bold;
+  color: red;
+}
+
+/* Center search bar */
+.yt-header-center {
+  display: flex;
+  width: 40%;
+}
+
+.yt-header-center input {
+  flex: 1;
+  padding: 0.4rem;
+}
+
+.yt-header-center button {
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+/* Right section */
+.signin-btn {
+  border: 1px solid #065fd4;
+  background: white;
+  color: #065fd4;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+/* ===== Sidebar Styles ===== */
+
+.yt-sidebar {
+  width: 200px;
+  padding-top: 1rem;
+  border-right: 1px solid #ddd;
+  background-color: #fff;
+}
+
+/* Individual sidebar items */
+.sidebar-item {
+  display: block;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.sidebar-item:hover {
+  background-color: #f2f2f2;
+}
+
+/* Active page highlight */
+.sidebar-item.active {
+  background-color: #e5e5e5;
+  font-weight: bold;
+}
+
+/* Make sidebar scrollable if content overflows */
+.yt-sidebar {
+  height: calc(100vh - 60px); /* full height minus header */
+  overflow-y: auto;
+}
+
+/* ===== Filter Bar Styles ===== */
+
+.filter-bar {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 16px;
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+/* Active filter button */
+.filter-btn.active {
+  background-color: black;
+  color: white;
+}
+
+/* ===== Like / Dislike Styles ===== */
+
+.like-dislike {
+  display: flex;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.like-dislike button {
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+}
+
+/* ===== Comments Section Styles ===== */
+
+.comments-section {
+  margin-top: 1rem;
+}
+
+.comments-section input {
+  width: 70%;
+  padding: 0.4rem;
+  margin-right: 0.5rem;
+}
+
+.comments-section button {
+  cursor: pointer;
+}
+
+.comments-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.comments-section li {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+/* ===== Auth Pages ===== */
+
+.auth-container {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+}
+
+.auth-container h2 {
+  text-align: center;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.auth-container input {
+  padding: 0.5rem;
+}
+
+.auth-container button {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.9rem;
+}

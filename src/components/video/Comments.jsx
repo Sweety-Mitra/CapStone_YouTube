@@ -1,50 +1,105 @@
-// This component handles video comments
-// Users can add and delete comments (frontend-only for now)
+// This component handles comments on the video
+// Features supported:
+// - Add comment
+// - Delete comment
+// - Edit comment (NEW FEATURE)
 
 import { useState } from "react";
 
 const Comments = () => {
-  // State to store list of comments
+  // Each comment is stored as an object
   const [comments, setComments] = useState([]);
 
-  // State for input field
+  // Input text for new comment
   const [commentText, setCommentText] = useState("");
 
-  // Function to add a comment
+  // Track which comment is being edited
+  const [editingIndex, setEditingIndex] = useState(null);
+
+  // Text for editing comment
+  const [editText, setEditText] = useState("");
+
+  // ADD COMMENT
   const addComment = () => {
     if (!commentText.trim()) return;
 
-    setComments([...comments, commentText]);
+    setComments([
+      ...comments,
+      { text: commentText }
+    ]);
+
     setCommentText("");
   };
 
-  // Function to delete a comment
+  // DELETE COMMENT
   const deleteComment = (index) => {
-    const updatedComments = comments.filter((_, i) => i !== index);
+    setComments(comments.filter((_, i) => i !== index));
+  };
+
+  // START EDITING A COMMENT
+  const startEdit = (index) => {
+    setEditingIndex(index);
+    setEditText(comments[index].text);
+  };
+
+  // SAVE EDITED COMMENT
+  const saveEdit = (index) => {
+    const updatedComments = comments.map((comment, i) =>
+      i === index ? { text: editText } : comment
+    );
+
     setComments(updatedComments);
+    setEditingIndex(null);
+    setEditText("");
   };
 
   return (
     <div className="comments-section">
       <h3>Comments</h3>
 
-      {/* Input field */}
+      {/* ADD COMMENT INPUT */}
       <input
         type="text"
         placeholder="Add a comment..."
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
       />
-
-      {/* Add comment button */}
       <button onClick={addComment}>Post</button>
 
-      {/* Comments list */}
+      {/* COMMENTS LIST */}
       <ul>
         {comments.map((comment, index) => (
-          <li key={index}>
-            {comment}
-            <button onClick={() => deleteComment(index)}>❌</button>
+          <li key={index} style={{ marginTop: "0.5rem" }}>
+            {/* If this comment is being edited */}
+            {editingIndex === index ? (
+              <>
+                <input
+                  type="text"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                />
+                <button onClick={() => saveEdit(index)}>Save</button>
+              </>
+            ) : (
+              <>
+                {/* Normal comment view */}
+                <span>{comment.text}</span>
+
+                <button
+                  onClick={() => startEdit(index)}
+                  style={{ marginLeft: "0.5rem" }}
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={() => deleteComment(index)}
+                  style={{ marginLeft: "0.5rem" }}
+                >
+                  Delete
+                </button>
+              </>
+            )}
           </li>
         ))}
       </ul>

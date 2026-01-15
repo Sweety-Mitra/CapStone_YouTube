@@ -23,7 +23,7 @@ const Home = () => {
   const [searchText, setSearchText] = useState("");
 
   // Filter videos based on selected category
-  const filteredVideos =
+  let filteredVideos =
     activeCategory === "All"
       ? mockVideos
       : mockVideos.filter(

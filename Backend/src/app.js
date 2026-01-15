@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
+import videoRoutes from "./routes/video.routes.js";
 
 const app = express();
 
@@ -9,6 +10,7 @@ app.use(express.json());
 
 // Auth routes
 app.use("/api/auth", authRoutes);
+app.use("/api/videos", videoRoutes);
 
 // Health check
 app.get("/", (req, res) => {

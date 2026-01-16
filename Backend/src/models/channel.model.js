@@ -8,14 +8,10 @@ const channelSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
 
     description: {
-      type: String,
-      default: "",
-    },
-
-    channelBanner: {
       type: String,
       default: "",
     },
@@ -24,6 +20,7 @@ const channelSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      unique: true, // one channel per user
     },
 
     subscribers: {

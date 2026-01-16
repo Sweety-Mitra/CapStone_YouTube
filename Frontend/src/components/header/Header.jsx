@@ -1,14 +1,23 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { searchVideos } from "../../api/videos";
 
 const Header = ({ onMenuClick }) => {
   // State to store search input value
   const [searchText, setSearchText] = useState("");
 
-  // Function triggered when user clicks search
-  const handleSearch = () => {
-    // For now, we only log the search text
-    // Later this will connect to backend search API
-    console.log("Searching for:", searchText);
+  const navigate = useNavigate();
+
+  const handleSearch = async () => {
+    if (!searchText.trim()) return;
+    navigate(`/?search=${searchText}`);
+  };
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.reload();
   };
 
   return (
@@ -38,7 +47,16 @@ const Header = ({ onMenuClick }) => {
 
       {/* RIGHT SECTION: Sign In */}
       <div className="yt-header-right">
-        <button className="signin-btn">Sign In</button>
+        {user ? (
+          <>
+            <span>{user.username}</span>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <button className="signin-btn" onClick={() => navigate("/login")}>
+            Sign In
+          </button>
+        )}
       </div>
     </header>
   );

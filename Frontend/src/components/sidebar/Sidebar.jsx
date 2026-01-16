@@ -5,6 +5,7 @@
 import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <aside className="yt-sidebar">
       {/* Navigation link to Home */}
@@ -33,15 +34,17 @@ const Sidebar = () => {
         📚 Library
       </NavLink>
 
-      {/* Channel page (user channel) */}
-      <NavLink
-        to="/channel"
-        className={({ isActive }) =>
-          isActive ? "sidebar-item active" : "sidebar-item"
-        }
-      >
-        👤 Your Channel
-      </NavLink>
+      {/* Channel (ONLY if logged in) */}
+      {user && (
+        <NavLink
+          to="/channel"
+          className={({ isActive }) =>
+            isActive ? "sidebar-item active" : "sidebar-item"
+          }
+        >
+          👤 Your Channel
+        </NavLink>
+      )}
     </aside>
   );
 };

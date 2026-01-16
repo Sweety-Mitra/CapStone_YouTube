@@ -1,17 +1,24 @@
-// This component represents a clickable video card
-// Clicking it navigates to the video player page
+// Clickable video card
+// Navigates to video player page using real backend data
 
 import { Link } from "react-router-dom";
 
-const VideoCard = ({ id, title, channel, views }) => {
+const VideoCard = ({ _id, title, thumbnailUrl, uploader, views }) => {
   return (
-    <Link to={`/video/${id}`} style={{ textDecoration: "none", color: "black" }}>
+    <Link
+      to={`/video/${_id}`}
+      style={{ textDecoration: "none", color: "black" }}
+    >
       <div style={{ width: "250px", cursor: "pointer" }}>
-        {/* Thumbnail placeholder */}
-        <div style={{ height: "140px", background: "#ccc" }} />
+        {/* Thumbnail */}
+        <img
+          src={thumbnailUrl || "https://via.placeholder.com/250x140"}
+          alt={title}
+          style={{ width: "100%", height: "140px", objectFit: "cover" }}
+        />
 
         <h4>{title}</h4>
-        <p>{channel}</p>
+        <p>{uploader?.username}</p>
         <span>{views} views</span>
       </div>
     </Link>

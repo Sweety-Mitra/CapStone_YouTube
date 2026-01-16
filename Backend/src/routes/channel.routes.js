@@ -1,22 +1,36 @@
-// Routes for channel APIs
-
 import express from "express";
-import {
-  createChannel,
-  getChannelById,
-  getChannelVideos,
-} from "../controllers/channel.controller.js";
+import Channel from "../models/channel.model.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-// Create channel (protected)
-router.post("/", authMiddleware, createChannel);
+/**
+ * CREATE CHANNEL
+ * POST /api/channels
+ * Protected
+ */
+router.post("/", authMiddleware, async (req, res) => {
+  try {
+    const channel = await Channel.create({
+      channelName: req.body.channelName,
+      description: req.body.description,
+      owner: req.user.id,
+    });
 
-// Get channel details
-router.get("/:id", getChannelById);
+    res.status(201).json(channel);
+  } catch (err) {
+    res.status(400).json({ message: "Failed to create channel" });
+  }
+});
 
-// Get channel videos
-router.get("/:id/videos", getChannelVideos);
+/**
+ * GET MY CHANNEL
+ * GET /api/channels/me
+ * Protected
+ */
+router.get("/me", authMiddleware, async (req, res) => {
+  const channel = await Channel.findOne({ owner: req.user.id });
+  res.json(channel);
+});
 
 export default router;

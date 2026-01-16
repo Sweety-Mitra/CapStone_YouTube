@@ -71,6 +71,14 @@ const Register = () => {
 
         <button type="submit">Register</button>
       </form>
+
+      <p>
+        Already have an account?{" "}
+        <span onClick={() => navigate("/login")} className="link">
+          Login
+        </span>
+      </p>
+
     </div>
   );
 };

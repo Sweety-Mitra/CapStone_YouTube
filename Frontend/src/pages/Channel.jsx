@@ -1,122 +1,143 @@
-// This page represents the user's channel page
-// User can CREATE, READ, UPDATE, and DELETE videos (CRUD)
-// This is frontend-only using React state (mock data)
-// Backend integration will replace this later
+// Channel Page
+// - Create channel (only once per user)
+// - View channel details
+// - List videos uploaded by this channel (next step will expand this)
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout";
+import { createChannel, fetchMyChannel } from "../api/channel";
+import { fetchChannelVideos, updateVideo, deleteVideo } from "../api/videos";
+
 
 const Channel = () => {
-  // ===============================
-  // STATE: list of videos uploaded by the user
-  // ===============================
-  const [videos, setVideos] = useState([
-    { id: 1, title: "My First Video" },
-    { id: 2, title: "React Tutorial" },
-  ]);
 
-  // ===============================
-  // STATE: input value for new video title
-  // ===============================
-  const [newTitle, setNewTitle] = useState("");
+  const [videos, setVideos] = useState([]);
 
-  // ===============================
-  // CREATE: Add a new video
-  // ===============================
-  const addVideo = () => {
-    // Prevent empty titles
-    if (!newTitle.trim()) return;
+  const user = JSON.parse(localStorage.getItem("user"));
 
-    // Add new video to list
-    setVideos([
-      ...videos,
-      {
-        id: Date.now(), // unique id
-        title: newTitle,
-      },
-    ]);
+  // Channel state
+  const [channel, setChannel] = useState(null);
 
-    // Clear input field
-    setNewTitle("");
+  // Form state
+  const [channelName, setChannelName] = useState("");
+  const [description, setDescription] = useState("");
+
+  // Load user's channel (if exists)
+  useEffect(() => {
+    const loadChannel = async () => {
+      try {
+        const data = await fetchMyChannel();
+        setChannel(data);
+      } catch (err) {
+        console.error("No channel found");
+      }
+    };
+
+    loadChannel();
+  }, []);
+
+  useEffect(() => {
+  if (channel?._id) {
+    fetchChannelVideos(channel._id).then(setVideos);
+  }
+}, [channel]);
+
+  // Create channel
+  const handleCreateChannel = async () => {
+    if (!channelName.trim()) return;
+
+    try {
+      const newChannel = await createChannel({
+        channelName,
+        description,
+      });
+      setChannel(newChannel);
+    } catch (err) {
+      alert("Failed to create channel");
+    }
   };
 
-  // ===============================
-  // DELETE: Remove a video
-  // ===============================
-  const deleteVideo = (id) => {
-    setVideos(videos.filter((video) => video.id !== id));
-  };
-
-  // ===============================
-  // UPDATE: Edit video title
-  // ===============================
-  const editVideo = (id) => {
-    const updatedTitle = prompt("Enter new video title");
-
-    // Cancel if empty or user pressed cancel
-    if (!updatedTitle) return;
-
-    setVideos(
-      videos.map((video) =>
-        video.id === id
-          ? { ...video, title: updatedTitle }
-          : video
-      )
+  // If user is not logged in
+  if (!user) {
+    return (
+      <MainLayout>
+        <p>Please login to access your channel.</p>
+      </MainLayout>
     );
-  };
+  }
 
-  // ===============================
-  // UI RENDER
-  // ===============================
   return (
     <MainLayout>
-      <h2>Your Channel</h2>
-      <p>Manage your uploaded videos</p>
+      {/* ========================= */}
+      {/* CREATE CHANNEL SECTION */}
+      {/* ========================= */}
+      {!channel ? (
+        <div>
+          <h2>Create Your Channel</h2>
 
-      {/* ========================= */}
-      {/* ADD NEW VIDEO SECTION */}
-      {/* ========================= */}
-      <div style={{ marginBottom: "1rem" }}>
-        <input
-          type="text"
-          placeholder="Enter new video title"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-        />
-        <button onClick={addVideo} style={{ marginLeft: "0.5rem" }}>
-          Add Video
-        </button>
-      </div>
+          <input
+            type="text"
+            placeholder="Channel name"
+            value={channelName}
+            onChange={(e) => setChannelName(e.target.value)}
+          />
 
-      {/* ========================= */}
-      {/* VIDEO LIST SECTION */}
-      {/* ========================= */}
-      {videos.length === 0 ? (
-        <p>No videos uploaded yet.</p>
+          <br />
+
+          <input
+            type="text"
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+
+          <br />
+
+          <button onClick={handleCreateChannel}>
+            Create Channel
+          </button>
+        </div>
       ) : (
-        <ul>
-          {videos.map((video) => (
-            <li key={video.id} style={{ marginBottom: "0.5rem" }}>
-              {/* Video title */}
-              <strong>{video.title}</strong>
+        /* ========================= */
+        /* CHANNEL DETAILS SECTION */
+        /* ========================= */
+        <div>
+          <h2>{channel.channelName}</h2>
+          <p>{channel.description}</p>
+          <p>
+            <strong>Subscribers:</strong>{" "}
+            {channel.subscribers}
+          </p>
 
-              {/* Edit & Delete buttons */}
+          {/* Placeholder for channel videos */}
+          <hr />
+          <h3>Your Videos</h3>
+          {videos.map((v) => (
+            <div key={v._id}>
+              <strong>{v.title}</strong>
+
               <button
-                onClick={() => editVideo(video.id)}
-                style={{ marginLeft: "0.5rem" }}
+                onClick={async () => {
+                  const newTitle = prompt("New title", v.title);
+                  if (!newTitle) return;
+                  const updated = await updateVideo(v._id, { title: newTitle });
+                  setVideos(videos.map((vid) => (vid._id === v._id ? updated : vid)));
+                }}
               >
                 Edit
               </button>
 
               <button
-                onClick={() => deleteVideo(video.id)}
-                style={{ marginLeft: "0.5rem" }}
+                onClick={async () => {
+                  await deleteVideo(v._id);
+                  setVideos(videos.filter((vid) => vid._id !== v._id));
+                }}
               >
                 Delete
               </button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </MainLayout>
   );

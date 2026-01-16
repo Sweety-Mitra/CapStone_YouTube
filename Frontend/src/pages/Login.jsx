@@ -2,29 +2,46 @@
 // Backend integration (JWT) will be added later
 
 import { useState } from "react";
+import API from "../api/axios";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   // State to store form values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   // State to store error messages
   const [error, setError] = useState("");
 
   // Handle login form submission
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!email || !password) {
       setError("All fields are required");
       return;
     }
 
-    // Temporary action (backend will replace this)
-    console.log("Logging in with:", email, password);
+    try {
+      const res = await API.post("/auth/login", {
+        email,
+        password,
+      });
 
-    setError("");
+      // Store JWT token
+      localStorage.setItem("token", res.data.token);
+
+      // Store user info (optional but useful)
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      // Redirect to home
+      navigate("/");
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed");
+    }
   };
 
   return (
@@ -50,6 +67,14 @@ const Login = () => {
 
         <button type="submit">Login</button>
       </form>
+
+      <p>
+        Don’t have an account?{" "}
+        <span onClick={() => navigate("/register")} className="link">
+          Register
+        </span>
+      </p>
+
     </div>
   );
 };

@@ -1,163 +1,207 @@
-// Displays video details + real comments (backend)
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import LikeDislike from "../video/LikeDislike";
-import {
-  fetchCommentsByVideo,
-  addComment,
-  editComment,
-  deleteComment,
-} from "../../api/comments";
+
+import Header from "../header/Header";
+import Sidebar from "../sidebar/Sidebar";
+
+import { fetchCommentsByVideo } from "../../api/comments";
 import { fetchVideoById } from "../../api/videos";
 
-<h1 style={{ color: "red" }}>VIDEO PLAYER DETAILS LOADED</h1>
+import "./VideoPlayerDetails.css";
+
+/* ---------- SESSION STATE (MEMORY ONLY) ---------- */
+
+const sessionComments = {};
+
+/* ---------- ICONS ---------- */
+const ThumbUpIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M7 10v10M17 10h-4l1-5-6 6v9h7l3-7v-3a2 2 0 0 0-2-2Z"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const ThumbDownIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M17 14V4M7 14h4l-1 5 6-6V4H9L6 11v3a2 2 0 0 0 2 2Z"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 const VideoPlayerDetails = () => {
-  const { id } = useParams(); // video id from URL
+  const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
+
+  /* SIDEBAR STATE (THIS IS WHY MENU NOW WORKS) */
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [video, setVideo] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [editingId, setEditingId] = useState(null);
-  const [editingText, setEditingText] = useState("");
 
-  // Load video
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisliked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [dislikeCount, setDislikeCount] = useState(0);
+
+  const commentsRef = useRef(sessionComments);
+
+  /* LOAD VIDEO */
   useEffect(() => {
-    const loadVideo = async () => {
-      const data = await fetchVideoById(id);
-      setVideo(data);
-    };
-    loadVideo();
+    if (!id) return;
+
+    fetchVideoById(id)
+      .then((res) => {
+        const v = res?.data ?? res ?? null;
+        setVideo(v);
+        setLikeCount(v?.likes || 0);
+        setDislikeCount(v?.dislikes || 0);
+      })
+      .catch(() => setVideo(null));
   }, [id]);
 
-  // Load comments
+  /* LOAD COMMENTS */
   useEffect(() => {
-    const loadComments = async () => {
-      const data = await fetchCommentsByVideo(id);
-      setComments(data);
-    };
-    loadComments();
+    if (!id) return;
+
+    fetchCommentsByVideo(id)
+      .then((data) => {
+        const sessionData = commentsRef.current[id] || [];
+        setComments([...sessionData, ...(data || [])]);
+      })
+      .catch(() => setComments(commentsRef.current[id] || []));
   }, [id]);
 
-  if (!video) return <p>Loading...</p>;
+  /* ADD COMMENT */
+  const handleAddComment = () => {
+    if (!newComment.trim()) return;
+
+    const tempComment = {
+      _id: crypto.randomUUID(),
+      text: newComment,
+      userId: { username: user?.username || "guest" },
+      session: true,
+    };
+
+    commentsRef.current[id] = [
+      tempComment,
+      ...(commentsRef.current[id] || []),
+    ];
+
+    setComments((prev) => [tempComment, ...prev]);
+    setNewComment("");
+  };
 
   return (
-    <div style={{ maxWidth: "900px", margin: "20px auto" }}>
-      {/* Video Player */}
-      <video width="100%" height="400" controls>
-        <source src={video.videoUrl} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+    <>
+      {/* HEADER */}
+      <Header onMenuClick={() => setSidebarOpen((v) => !v)} />
 
-      <h2>{video.title}</h2>
+      <div style={{ display: "flex" }}>
+        {/* SIDEBAR */}
+        {sidebarOpen && <Sidebar />}
 
-      <p>
-        <strong>Channel: {video.uploader?.username}</strong>
-      </p>
+        {/* PAGE CONTENT */}
+        <div className="vp-root">
+          <div className="vp-card">
 
-      <LikeDislike />
+            {/* VIDEO */}
+            <div className="vp-video">
+              {video?.videoUrl ? (
+                <video controls playsInline>
+                  <source src={video.videoUrl} type="video/mp4" />
+                </video>
+              ) : (
+                <div className="vp-video-unavailable">
+                  Video unavailable
+                </div>
+              )}
+            </div>
 
-      <p>{video.description}</p>
+            {/* META */}
+            <div className="vp-meta">
+              <div className="vp-title">
+                <h2>{video?.title || "Untitled video"}</h2>
+                <span>{video?.uploader?.username || "Unknown uploader"}</span>
+              </div>
 
-      <hr />
+              <div className="vp-reactions">
+                <button
+                  className={`vp-react ${liked ? "active" : ""}`}
+                  onClick={() => {
+                    if (disliked) {
+                      setDisliked(false);
+                      setDislikeCount((c) => Math.max(0, c - 1));
+                    }
+                    setLiked((v) => {
+                      setLikeCount((c) => (v ? c - 1 : c + 1));
+                      return !v;
+                    });
+                  }}
+                >
+                  <ThumbUpIcon />
+                  <span>{likeCount}</span>
+                </button>
 
-      <p style={{ color: "red" }}>
-        DEBUG USER: {user ? user.username : "NO USER"}
-      </p>
+                <button
+                  className={`vp-react ${disliked ? "active" : ""}`}
+                  onClick={() => {
+                    if (liked) {
+                      setLiked(false);
+                      setLikeCount((c) => Math.max(0, c - 1));
+                    }
+                    setDisliked((v) => {
+                      setDislikeCount((c) => (v ? c - 1 : c + 1));
+                      return !v;
+                    });
+                  }}
+                >
+                  <ThumbDownIcon />
+                  <span>{dislikeCount}</span>
+                </button>
+              </div>
+            </div>
 
+            {/* DESCRIPTION */}
+            <div className="vp-desc">
+              {video?.description || "No description available."}
+            </div>
 
-      {/* Comments Section */}
-      <h3>Comments</h3>
+            {/* COMMENTS */}
+            <div className="vp-comments">
+              <h4>{comments.length} replies</h4>
 
-      {/* Add Comment */}
-      {user && (
-        <div>
-          <input
-            type="text"
-            placeholder="Add a comment"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <button
-            onClick={async () => {
-              if (!newComment) return;
+              <div className="vp-input">
+                <input
+                  placeholder="Write a reply…"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                />
+                <button onClick={handleAddComment}>Send</button>
+              </div>
 
-              const comment = await addComment({
-                videoId: id,
-                text: newComment,
-              });
+              {comments.map((c) => (
+                <div key={c._id} className="vp-comment">
+                  <span className="vp-user">{c.userId?.username}</span>
+                  <span className="vp-text">{c.text}</span>
+                </div>
+              ))}
+            </div>
 
-              setComments([comment, ...comments]);
-              setNewComment("");
-            }}
-          >
-            Comment
-          </button>
+          </div>
         </div>
-      )}
-
-      {/* Show Comments */}
-      {comments.map((c) => (
-        <div key={c._id} style={{ marginTop: "10px" }}>
-          <strong>{c.userId?.username}</strong>
-
-          {editingId === c._id ? (
-            <>
-              <input
-                value={editingText}
-                onChange={(e) => setEditingText(e.target.value)}
-              />
-              <button
-                onClick={async () => {
-                  const updated = await editComment(c._id, {
-                    text: editingText,
-                  });
-
-                  setComments(
-                    comments.map((cm) =>
-                      cm._id === c._id ? updated : cm
-                    )
-                  );
-
-                  setEditingId(null);
-                }}
-              >
-                Save
-              </button>
-            </>
-          ) : (
-            <p>{c.text}</p>
-          )}
-
-          {/* Edit/Delete only for owner */}
-          {user?.id === (c.userId?._id || c.userId) && (
-            <>
-              <button
-                onClick={() => {
-                  setEditingId(c._id);
-                  setEditingText(c.text);
-                }}
-              >
-                Edit
-              </button>
-
-              <button
-                onClick={async () => {
-                  await deleteComment(c._id);
-                  setComments(
-                    comments.filter((cm) => cm._id !== c._id)
-                  );
-                }}
-              >
-                Delete
-              </button>
-            </>
-          )}
-        </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 };
 

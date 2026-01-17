@@ -1,25 +1,19 @@
-// Clickable video card
-// Navigates to video player page using real backend data
-
 import { Link } from "react-router-dom";
+import "./VideoCard.css";
 
 const VideoCard = ({ _id, title, thumbnailUrl, uploader, views }) => {
   return (
-    <Link
-      to={`/video/${_id}`}
-      style={{ textDecoration: "none", color: "black" }}
-    >
-      <div style={{ width: "250px", cursor: "pointer" }}>
-        {/* Thumbnail */}
+    <Link to={`/video/${_id}`} className="video-card-link">
+      <div className="video-card">
         <img
           src={thumbnailUrl || "https://via.placeholder.com/250x140"}
           alt={title}
-          style={{ width: "100%", height: "140px", objectFit: "cover" }}
+          className="video-thumb"
         />
 
-        <h4>{title}</h4>
-        <p>{uploader?.username}</p>
-        <span>{views} views</span>
+        <h4 className="video-title">{title}</h4>
+        <p className="video-uploader">{uploader?.username}</p>
+        <span className="video-views">{views} views</span>
       </div>
     </Link>
   );

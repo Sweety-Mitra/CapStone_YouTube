@@ -5,11 +5,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px;
-  border-bottom: 1px solid #e5e5e5;
-  background: #fff;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
   position: sticky;
   top: 0;
   z-index: 100;
+  color: var(--text);
 }
 
 /* LEFT */
@@ -24,6 +25,7 @@
   background: none;
   border: none;
   cursor: pointer;
+  color: var(--text);
 }
 
 .logo {
@@ -33,6 +35,7 @@
   font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
+  color: var(--text);
 }
 
 .logo-icon {
@@ -50,27 +53,30 @@
 .yt-header-center input {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-right: none;
   border-radius: 20px 0 0 20px;
   outline: none;
+  background: var(--surface);
+  color: var(--text);
 }
 
 .yt-header-center input:focus {
-  border-color: #065fd4;
+  border-color: var(--accent);
 }
 
 .yt-header-center button {
   padding: 0 18px;
-  border: 1px solid #ccc;
-  background: #f8f8f8;
+  border: 1px solid var(--border);
+  background: var(--hover);
   border-radius: 0 20px 20px 0;
   cursor: pointer;
   font-size: 1.2rem;
+  color: var(--text);
 }
 
 .yt-header-center button:hover {
-  background: #f0f0f0;
+  background: var(--border);
 }
 
 /* RIGHT */
@@ -83,12 +89,13 @@
 .username {
   font-size: 0.9rem;
   font-weight: 500;
+  color: var(--text);
 }
 
 .signin-btn {
-  border: 1px solid #065fd4;
-  background: white;
-  color: #065fd4;
+  border: 1px solid var(--accent);
+  background: var(--surface);
+  color: var(--accent);
   padding: 6px 14px;
   border-radius: 20px;
   cursor: pointer;
@@ -96,13 +103,13 @@
 }
 
 .signin-btn:hover {
-  background: rgba(6, 95, 212, 0.1);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
 }
 
 .logout-btn {
   background: none;
   border: none;
-  color: #065fd4;
+  color: var(--accent);
   cursor: pointer;
   font-weight: 500;
 }
@@ -112,11 +119,12 @@
 .yt-sidebar {
   width: 220px;
   padding: 8px;
-  background-color: #fff;
-  border-right: 1px solid #e5e5e5;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
   height: calc(100vh - 60px);
   overflow-y: auto;
   box-sizing: border-box;
+  color: var(--text);
 }
 
 /* Sidebar item */
@@ -128,19 +136,19 @@
   margin: 2px 0;
   border-radius: 10px;
   text-decoration: none;
-  color: #0f0f0f;
+  color: var(--text);
   font-size: 0.95rem;
   cursor: pointer;
 }
 
 /* Hover */
 .sidebar-item:hover {
-  background-color: #f2f2f2;
+  background-color: var(--hover);
 }
 
 /* Active */
 .sidebar-item.active {
-  background-color: #e5e5e5;
+  background-color: var(--border);
   font-weight: 500;
 }
 
@@ -168,14 +176,14 @@
 /* Divider */
 .sidebar-divider {
   border: none;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--border);
   margin: 8px 0;
 }
 
 /* Muted text */
 .sidebar-muted {
   font-size: 0.85rem;
-  color: #606060;
+  color: var(--muted);
   padding: 0 12px 8px;
 }
 
@@ -191,14 +199,15 @@
   padding: 0.4rem 0.8rem;
   border: none;
   border-radius: 16px;
-  background-color: #f2f2f2;
+  background-color: var(--hover);
   cursor: pointer;
+  color: var(--text);
 }
 
 /* Active filter button */
 .filter-btn.active {
-  background-color: black;
-  color: white;
+  background-color: var(--text);
+  color: var(--bg);
 }
 
 /* ===== Like / Dislike Styles ===== */
@@ -212,6 +221,7 @@
 .like-dislike button {
   cursor: pointer;
   padding: 0.3rem 0.6rem;
+  color: var(--text);
 }
 
 /* ===== Comments Section Styles ===== */
@@ -224,10 +234,14 @@
   width: 70%;
   padding: 0.4rem;
   margin-right: 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .comments-section button {
   cursor: pointer;
+  color: var(--text);
 }
 
 .comments-section ul {
@@ -247,7 +261,9 @@
   max-width: 400px;
   margin: 3rem auto;
   padding: 1.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
 }
 
 .auth-container h2 {
@@ -262,6 +278,9 @@
 
 .auth-container input {
   padding: 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .auth-container button {
@@ -274,24 +293,37 @@
   font-size: 0.9rem;
 }
 
-.link{
-  color: blue;
+.link {
+  color: var(--accent);
   cursor: pointer;
   font-weight: bold;
 }
 
-
-/*Show Password Toggle*/
+/* ===== Show Password Toggle ===== */
 
 .password-wrapper {
   position: relative;
   width: 100%;
 }
-
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+.page-root {
+  min-height: 100vh;
+  background: var(--bg);
+}
 .password-wrapper input {
   width: 100%;
-  box-sizing: border-box; /* 🔑 important */
-  padding-right: 40px;    /* space for eye icon */
+  box-sizing: border-box;
+  padding-right: 40px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .eye {
@@ -302,4 +334,5 @@
   cursor: pointer;
   font-size: 1.1rem;
   user-select: none;
+  color: var(--muted);
 }

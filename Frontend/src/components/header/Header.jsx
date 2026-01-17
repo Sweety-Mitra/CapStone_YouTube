@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdMenu, MdSearch } from "react-icons/md";
+import ThemeToggle from "../ThemeToggle";
+
 
 const Header = ({ onMenuClick }) => {
   const [searchText, setSearchText] = useState("");
@@ -23,7 +25,8 @@ const Header = ({ onMenuClick }) => {
     <header className="yt-header">
       {/* LEFT */}
       <div className="yt-header-left">
-        <button className="menu-btn" onClick={onMenuClick}>
+        <button className="menu-btn" onClick={() => onMenuClick?.()}>
+
           <MdMenu />
         </button>
 
@@ -49,19 +52,22 @@ const Header = ({ onMenuClick }) => {
 
       {/* RIGHT */}
       <div className="yt-header-right">
-        {user ? (
-          <>
-            <span className="username">{user.username}</span>
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <button className="signin-btn" onClick={() => navigate("/login")}>
-            Sign in
-          </button>
-        )}
-      </div>
+  <ThemeToggle />
+
+  {user ? (
+    <>
+      <span className="username">{user.username}</span>
+      <button className="logout-btn" onClick={handleLogout}>
+        Logout
+      </button>
+    </>
+  ) : (
+    <button className="signin-btn" onClick={() => navigate("/login")}>
+      Sign in
+    </button>
+  )}
+</div>
+
     </header>
   );
 };

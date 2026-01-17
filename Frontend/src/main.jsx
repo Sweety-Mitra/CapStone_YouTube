@@ -4,9 +4,12 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./styles/global.css";
 import "./styles/variables.css";
+import { ThemeProvider } from "./context/ThemeContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <ThemeProvider>
   <BrowserRouter>
     <App />
   </BrowserRouter>
+  </ThemeProvider>
 );

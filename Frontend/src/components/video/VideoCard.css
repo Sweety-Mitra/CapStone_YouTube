@@ -1,0 +1,54 @@
+.video-card-link {
+  text-decoration: none;
+  color: inherit; /* 🔑 DARK MODE FIX */
+}
+
+.video-card {
+  width: 250px;
+  cursor: pointer;
+}
+
+.video-thumb {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.video-title {
+  margin: 6px 0 2px;
+  font-size: 0.95rem;
+  color: inherit;
+}
+
+.video-uploader,
+.video-views {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.video-card-link {
+  text-decoration: none;
+  color: inherit; /* 🔑 DARK MODE FIX */
+}
+
+.video-card {
+  width: 250px;
+  cursor: pointer;
+}
+
+.video-thumb {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.video-title {
+  margin: 6px 0 2px;
+  font-size: 0.95rem;
+  color: inherit;
+}
+
+.video-uploader,
+.video-views {
+  font-size: 0.85rem;
+  color: var(--muted);
+}

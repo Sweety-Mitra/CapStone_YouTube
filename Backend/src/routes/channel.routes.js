@@ -11,6 +11,18 @@ const router = express.Router();
  */
 router.post("/", authMiddleware, async (req, res) => {
   try {
+
+    // Check if channel already exists
+    const existingChannel = await Channel.findOne({
+      owner: req.user.id,
+    });
+
+    if (existingChannel) {
+      return res.status(400).json({
+        message: "Channel already exists for this user",
+      });
+    }
+
     const channel = await Channel.create({
       channelName: req.body.channelName,
       description: req.body.description,
@@ -19,6 +31,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
     res.status(201).json(channel);
   } catch (err) {
+    console.error(err);
     res.status(400).json({ message: "Failed to create channel" });
   }
 });

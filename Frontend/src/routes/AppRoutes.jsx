@@ -5,6 +5,7 @@ import Register from "../pages/Register";
 import VideoPlayer from "../pages/VideoPlayer";
 import Channel from "../pages/Channel";
 import VideoPlayerDetails from "../components/video/VideoPlayerDetails";
+import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
   return (
@@ -12,9 +13,16 @@ const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/video/:id" element={<VideoPlayerDetails />} />
+      <Route
+        path="/video/:id"
+        element={<VideoPlayerDetails key={window.location.pathname} />}
+      />
       <Route path="/channel" element={<Channel />} />
+
+    {/* INVALID ROUTES */}
+      <Route path="*" element={<NotFound />} /> 
     </Routes>
+
   );
 };
 

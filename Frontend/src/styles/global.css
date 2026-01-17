@@ -4,91 +4,187 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 1rem;
-  border-bottom: 1px solid #ddd;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
   position: sticky;
   top: 0;
-  background: white;
   z-index: 100;
+  color: var(--text);
 }
 
-/* Left section */
+/* LEFT */
 .yt-header-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .menu-btn {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   background: none;
   border: none;
   cursor: pointer;
+  color: var(--text);
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: red;
+  cursor: pointer;
+  color: var(--text);
 }
 
-/* Center search bar */
+.logo-icon {
+  color: red;
+  font-size: 1.4rem;
+}
+
+/* CENTER */
 .yt-header-center {
   display: flex;
-  width: 40%;
+  width: 45%;
+  max-width: 600px;
 }
 
 .yt-header-center input {
   flex: 1;
-  padding: 0.4rem;
+  padding: 8px 12px;
+  border: 1px solid black;
+  border-right: none;
+  border-radius: 20px 0 0 20px;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.yt-header-center input:focus {
+  border-color: var(--accent);
 }
 
 .yt-header-center button {
-  padding: 0.4rem 0.8rem;
+  padding: 0 18px;
+  border: 1px solid black;
+  background: var(--hover);
+  border-radius: 0 20px 20px 0;
   cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text);
 }
 
-/* Right section */
+.yt-header-center button:hover {
+  background: var(--border);
+}
+
+/* RIGHT */
+.yt-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
 .signin-btn {
-  border: 1px solid #065fd4;
-  background: white;
-  color: #065fd4;
-  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+  padding: 6px 14px;
+  border-radius: 20px;
   cursor: pointer;
+  font-weight: 500;
+}
+
+.signin-btn:hover {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 500;
 }
 
 /* ===== Sidebar Styles ===== */
 
 .yt-sidebar {
-  width: 200px;
-  padding-top: 1rem;
-  border-right: 1px solid #ddd;
-  background-color: #fff;
+  width: 220px;
+  padding: 8px;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  color: var(--text);
 }
 
-/* Individual sidebar items */
+/* Sidebar item */
 .sidebar-item {
-  display: block;
-  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  margin: 2px 0;
+  border-radius: 10px;
   text-decoration: none;
-  color: black;
+  color: var(--text);
+  font-size: 0.95rem;
   cursor: pointer;
 }
 
-/* Hover effect */
+/* Hover */
 .sidebar-item:hover {
-  background-color: #f2f2f2;
+  background-color: var(--hover);
 }
 
-/* Active page highlight */
+/* Active */
 .sidebar-item.active {
-  background-color: #e5e5e5;
-  font-weight: bold;
+  background-color: var(--border);
+  font-weight: 500;
 }
 
-/* Make sidebar scrollable if content overflows */
-.yt-sidebar {
-  height: calc(100vh - 60px); /* full height minus header */
-  overflow-y: auto;
+/* Icons */
+.icon {
+  font-size: 1.6rem;
+  min-width: 24px;
+}
+
+/* Section titles */
+.sidebar-section {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Arrow */
+.arrow {
+  font-size: 1.2rem;
+}
+
+/* Divider */
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 8px 0;
+}
+
+/* Muted text */
+.sidebar-muted {
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 0 12px 8px;
 }
 
 /* ===== Filter Bar Styles ===== */
@@ -103,14 +199,15 @@
   padding: 0.4rem 0.8rem;
   border: none;
   border-radius: 16px;
-  background-color: #f2f2f2;
+  background-color: var(--hover);
   cursor: pointer;
+  color: var(--text);
 }
 
 /* Active filter button */
 .filter-btn.active {
-  background-color: black;
-  color: white;
+  background-color: var(--text);
+  color: var(--bg);
 }
 
 /* ===== Like / Dislike Styles ===== */
@@ -124,34 +221,11 @@
 .like-dislike button {
   cursor: pointer;
   padding: 0.3rem 0.6rem;
+  color: var(--text);
 }
 
-/* ===== Comments Section Styles ===== */
 
-.comments-section {
-  margin-top: 1rem;
-}
 
-.comments-section input {
-  width: 70%;
-  padding: 0.4rem;
-  margin-right: 0.5rem;
-}
-
-.comments-section button {
-  cursor: pointer;
-}
-
-.comments-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.comments-section li {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-}
 
 /* ===== Auth Pages ===== */
 
@@ -159,7 +233,9 @@
   max-width: 400px;
   margin: 3rem auto;
   padding: 1.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
 }
 
 .auth-container h2 {
@@ -174,6 +250,9 @@
 
 .auth-container input {
   padding: 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .auth-container button {
@@ -184,4 +263,297 @@
 .error-text {
   color: red;
   font-size: 0.9rem;
+}
+
+.link {
+  color: blue;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* ===== Show Password Toggle ===== */
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+.page-root {
+  min-height: 100vh;
+  background: var(--bg);
+}
+.password-wrapper input {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 40px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.1rem;
+  user-select: none;
+  color: var(--muted);
+}
+
+.channel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: inherit;
+  padding: 6px;
+  pointer-events: auto;
+}
+
+.channel-btn:hover {
+  opacity: 0.85;
+}
+
+.yt-header-left,
+.yt-header-center,
+.yt-header-right {
+  position: relative;
+}
+
+.yt-header-right {
+  z-index: 3;
+}
+
+.yt-header-center {
+  z-index: 2;
+}
+
+.yt-header-left {
+  z-index: 3;
+}
+
+.yt-header-center {
+  pointer-events: auto;
+}
+
+.channel-btn {
+  z-index: 4;
+  position: relative;
+}
+
+/* CREATE BUTTON */
+
+.create-wrapper {
+  position: relative;
+}
+
+.create-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.create-btn:hover {
+  background: var(--hover);
+}
+
+/* DROPDOWN */
+
+.create-menu {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  min-width: 160px;
+  z-index: 999;
+}
+
+.create-menu button {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.create-menu button:hover {
+  background: var(--hover);
+}
+
+/*Header Profile */
+
+/* PROFILE AVATAR */
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+/* PROFILE DROPDOWN */
+.profile-menu {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  width: 160px;
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  z-index: 200;
+}
+
+.profile-top {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.profile-top img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+.profile-top strong {
+  font-size: 14px;
+}
+
+.profile-top p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.profile-menu hr {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+.profile-menu button {
+  width: 100%;
+  padding: 8px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.profile-menu button:hover {
+  background: var(--hover);
+}
+
+.profile-menu .logout {
+  color: #ff4d4f;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ICON-ONLY BUTTONS (Theme + Profile) */
+.theme-toggle,
+.profile-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+/* Remove browser focus box */
+.theme-toggle:focus,
+.profile-btn:focus,
+.theme-toggle:active,
+.profile-btn:active {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Optional subtle hover like YouTube */
+.theme-toggle:hover,
+.profile-btn:hover {
+  opacity: 0.85;
+}
+
+/* ================= HEADER RESPONSIVE FIX ================= */
+
+@media (max-width: 1024px) {
+  .yt-header {
+    padding: 8px 12px;
+    width: 100%;
+  }
+
+  .yt-header-center {
+    width: 100%;
+    max-width: none;
+    margin: 0 8px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .yt-header {
+    padding: 8px 12px;
+    width: 100%;
+  }
+
+  .yt-header-center {
+    display: block
+  }
+
+  .yt-header-left {
+    gap: 10px;
+  }
+
+  .yt-header-right {
+    gap: 8px;
+  }
+}
+
+/* Header must always be clickable */
+.yt-header {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+}
+
+.menu-btn {
+  position: relative;
+  z-index: 1300;
 }

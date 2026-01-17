@@ -1,81 +1,78 @@
 // This page handles user login UI
-// Backend integration (JWT) will be added later
 
 import { useState } from "react";
-import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
-
+import { loginUser } from "../api/auth";
+import MainLayout from "../layout/MainLayout";
 
 const Login = () => {
-  // State to store form values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  // State to store error messages
-  const [error, setError] = useState("");
-
-  // Handle login form submission
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!email || !password) {
-      setError("All fields are required");
-      return;
-    }
+  if (!email || !password) {
+    setError("All fields are required");
+    return;
+  }
 
-    try {
-      const res = await API.post("/auth/login", {
-        email,
-        password,
-      });
+  try {
+    const data = await loginUser({ email, password });
 
-      // Store JWT token
-      localStorage.setItem("token", res.data.token);
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        token: data.token,
+        user: data.user,
+      })
+    );
 
-      // Store user info (optional but useful)
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+    navigate("/");
+  } catch (err) {
+    setError(err.response?.data?.message || "Login failed");
+  }
+};
 
-      // Redirect to home
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
-    }
-  };
 
   return (
-    <div className="auth-container">
-      <h2>Sign In</h2>
+    <MainLayout>
 
-      {error && <p className="error-text">{error}</p>}
+      <div className="auth-container">
+        <h2>Sign In</h2>
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        {error && <p className="error-text">{error}</p>}
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <button type="submit">Login</button>
-      </form>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-      <p>
-        Don’t have an account?{" "}
-        <span onClick={() => navigate("/register")} className="link">
-          Register
-        </span>
-      </p>
+          <button type="submit">Login</button>
+        </form>
 
-    </div>
+        <p>
+          Don’t have an account?{" "}
+          <span onClick={() => navigate("/register")} className="link">
+            Register
+          </span>
+        </p>
+      </div>
+
+    </MainLayout>
   );
 };
 

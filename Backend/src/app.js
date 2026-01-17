@@ -21,4 +21,11 @@ app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
+/* API NOT FOUND HANDLER (ADD THIS) */
+app.use((req, res) => {
+  res.status(404).json({
+    message: "API route not found",
+  });
+});
+
 export default app;

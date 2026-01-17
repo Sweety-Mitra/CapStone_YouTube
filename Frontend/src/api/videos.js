@@ -32,3 +32,8 @@ export const searchVideos = async (query) => {
   const res = await API.get(`/videos/search/${query}`);
   return res.data;
 };
+
+export const uploadVideo = async (data) => {
+  const res = await API.post("/videos", data);
+  return res.data;
+};

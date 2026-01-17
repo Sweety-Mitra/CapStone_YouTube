@@ -1,22 +1,17 @@
 // This page handles user login UI
-// Backend integration (JWT) will be added later
 
 import { useState } from "react";
-import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
-
+import { loginUser } from "../api/auth";
+import MainLayout from "../layout/MainLayout";
 
 const Login = () => {
-  // State to store form values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  // State to store error messages
-  const [error, setError] = useState("");
-
-  // Handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -26,18 +21,17 @@ const Login = () => {
     }
 
     try {
-      const res = await API.post("/auth/login", {
-        email,
-        password,
-      });
+      const res = await loginUser({ email, password });
 
-      // Store JWT token
-      localStorage.setItem("token", res.data.token);
+      //Correct storage format
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          token: res.data.token,
+          user: res.data.user,
+        })
+      );
 
-      // Store user info (optional but useful)
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-
-      // Redirect to home
       navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
@@ -45,6 +39,8 @@ const Login = () => {
   };
 
   return (
+    <MainLayout>
+
     <div className="auth-container">
       <h2>Sign In</h2>
 
@@ -74,8 +70,9 @@ const Login = () => {
           Register
         </span>
       </p>
-
     </div>
+
+    </MainLayout>
   );
 };
 

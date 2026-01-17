@@ -29,7 +29,7 @@ export const createChannel = async (req, res) => {
       channelName,
       description,
       channelBanner,
-      owner: req.user,
+      owner: req.user.id,
     });
 
     res.status(201).json(channel);

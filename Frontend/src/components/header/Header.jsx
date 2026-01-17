@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { searchVideos } from "../../api/videos";
+import { MdMenu, MdSearch } from "react-icons/md";
 
 const Header = ({ onMenuClick }) => {
-  // State to store search input value
   const [searchText, setSearchText] = useState("");
-
   const navigate = useNavigate();
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (!searchText.trim()) return;
     navigate(`/?search=${searchText}`);
   };
+
   const user = JSON.parse(localStorage.getItem("user"));
 
   const handleLogout = () => {
@@ -22,39 +21,44 @@ const Header = ({ onMenuClick }) => {
 
   return (
     <header className="yt-header">
-      {/* LEFT SECTION: Hamburger + Logo */}
+      {/* LEFT */}
       <div className="yt-header-left">
-        {/* Hamburger menu icon */}
         <button className="menu-btn" onClick={onMenuClick}>
-          ☰
+          <MdMenu />
         </button>
 
-        {/* YouTube Logo */}
-        <h2 className="logo">YouTube</h2>
+        <div className="logo" onClick={() => navigate("/")}>
+          <span className="logo-icon">▶</span>
+          <span>YouTube</span>
+        </div>
       </div>
 
-      {/* CENTER SECTION: Search bar */}
+      {/* CENTER */}
       <div className="yt-header-center">
         <input
           type="text"
           placeholder="Search"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         />
-
-        <button onClick={handleSearch}>🔍</button>
+        <button onClick={handleSearch}>
+          <MdSearch />
+        </button>
       </div>
 
-      {/* RIGHT SECTION: Sign In */}
+      {/* RIGHT */}
       <div className="yt-header-right">
         {user ? (
           <>
-            <span>{user.username}</span>
-            <button onClick={handleLogout}>Logout</button>
+            <span className="username">{user.username}</span>
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
           </>
         ) : (
           <button className="signin-btn" onClick={() => navigate("/login")}>
-            Sign In
+            Sign in
           </button>
         )}
       </div>

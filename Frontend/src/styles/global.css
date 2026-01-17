@@ -4,91 +4,179 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 1rem;
-  border-bottom: 1px solid #ddd;
+  padding: 8px 16px;
+  border-bottom: 1px solid #e5e5e5;
+  background: #fff;
   position: sticky;
   top: 0;
-  background: white;
   z-index: 100;
 }
 
-/* Left section */
+/* LEFT */
 .yt-header-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .menu-btn {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   background: none;
   border: none;
   cursor: pointer;
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: red;
+  cursor: pointer;
 }
 
-/* Center search bar */
+.logo-icon {
+  color: red;
+  font-size: 1.4rem;
+}
+
+/* CENTER */
 .yt-header-center {
   display: flex;
-  width: 40%;
+  width: 45%;
+  max-width: 600px;
 }
 
 .yt-header-center input {
   flex: 1;
-  padding: 0.4rem;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-radius: 20px 0 0 20px;
+  outline: none;
+}
+
+.yt-header-center input:focus {
+  border-color: #065fd4;
 }
 
 .yt-header-center button {
-  padding: 0.4rem 0.8rem;
+  padding: 0 18px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+  border-radius: 0 20px 20px 0;
   cursor: pointer;
+  font-size: 1.2rem;
 }
 
-/* Right section */
+.yt-header-center button:hover {
+  background: #f0f0f0;
+}
+
+/* RIGHT */
+.yt-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 .signin-btn {
   border: 1px solid #065fd4;
   background: white;
   color: #065fd4;
-  padding: 0.4rem 0.8rem;
+  padding: 6px 14px;
+  border-radius: 20px;
   cursor: pointer;
+  font-weight: 500;
+}
+
+.signin-btn:hover {
+  background: rgba(6, 95, 212, 0.1);
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #065fd4;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 /* ===== Sidebar Styles ===== */
 
 .yt-sidebar {
-  width: 200px;
-  padding-top: 1rem;
-  border-right: 1px solid #ddd;
+  width: 220px;
+  padding: 8px;
   background-color: #fff;
+  border-right: 1px solid #e5e5e5;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
-/* Individual sidebar items */
+/* Sidebar item */
 .sidebar-item {
-  display: block;
-  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  margin: 2px 0;
+  border-radius: 10px;
   text-decoration: none;
-  color: black;
+  color: #0f0f0f;
+  font-size: 0.95rem;
   cursor: pointer;
 }
 
-/* Hover effect */
+/* Hover */
 .sidebar-item:hover {
   background-color: #f2f2f2;
 }
 
-/* Active page highlight */
+/* Active */
 .sidebar-item.active {
   background-color: #e5e5e5;
-  font-weight: bold;
+  font-weight: 500;
 }
 
-/* Make sidebar scrollable if content overflows */
-.yt-sidebar {
-  height: calc(100vh - 60px); /* full height minus header */
-  overflow-y: auto;
+/* Icons */
+.icon {
+  font-size: 1.6rem;
+  min-width: 24px;
+}
+
+/* Section titles */
+.sidebar-section {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Arrow */
+.arrow {
+  font-size: 1.2rem;
+}
+
+/* Divider */
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  margin: 8px 0;
+}
+
+/* Muted text */
+.sidebar-muted {
+  font-size: 0.85rem;
+  color: #606060;
+  padding: 0 12px 8px;
 }
 
 /* ===== Filter Bar Styles ===== */
@@ -184,4 +272,34 @@
 .error-text {
   color: red;
   font-size: 0.9rem;
+}
+
+.link{
+  color: blue;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+/*Show Password Toggle*/
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  box-sizing: border-box; /* 🔑 important */
+  padding-right: 40px;    /* space for eye icon */
+}
+
+.eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.1rem;
+  user-select: none;
 }

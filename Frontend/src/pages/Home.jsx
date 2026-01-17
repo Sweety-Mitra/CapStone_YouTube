@@ -48,9 +48,11 @@ const Home = () => {
 
   // Filter videos by category
   const filteredVideos =
-    activeCategory === "All"
-      ? videos
-      : videos.filter((v) => v.category === activeCategory);
+  activeCategory === "All"
+    ? videos.slice(0, 4)
+    : videos
+        .filter((v) => v.category === activeCategory)
+        .slice(0, 4);
 
   return (
     <MainLayout>

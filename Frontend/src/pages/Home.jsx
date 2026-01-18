@@ -5,7 +5,7 @@ import MainLayout from "../layout/MainLayout";
 import VideoCard from "../components/video/VideoCard";
 import VideoGrid from "../components/video/VideoGrid";
 import FilterBar from "../components/video/FilterBar";
-import { fetchAllVideos } from "../api/videos";
+import { fetchAllVideos,searchVideos  } from "../api/videos";
 
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
     "All",
     "Coding",
     "Gaming",
-    "Music",
+    "Travel",
     "Education",
     "News",
   ];
@@ -49,10 +49,10 @@ const Home = () => {
   // Filter videos by category
   const filteredVideos =
   activeCategory === "All"
-    ? videos.slice(0, 4)
+    ? videos.slice(0, 20)
     : videos
         .filter((v) => v.category === activeCategory)
-        .slice(0, 4);
+        .slice(0, 20);
 
   return (
     <MainLayout>

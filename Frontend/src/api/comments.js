@@ -4,7 +4,7 @@ import API from "./axios";
 
 // Fetch comments for a video
 export const fetchCommentsByVideo = async (videoId) => {
-  const res = await API.get(`/comments/video/${videoId}`);
+  const res = await API.get(`/comments/${videoId}`);
   return res.data;
 };
 

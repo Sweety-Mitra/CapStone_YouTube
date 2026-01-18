@@ -53,6 +53,43 @@ router.get("/search/:query", async (req, res) => {
 });
 
 /**
+ * CREATE VIDEO (UPLOAD)
+ * POST /api/videos
+ */
+router.post("/", authMiddleware, async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      videoUrl,
+      thumbnailUrl,
+      channelId,
+      category,
+    } = req.body;
+
+    if (!title || !videoUrl || !thumbnailUrl || !channelId) {
+      return res.status(400).json({ message: "Required fields missing" });
+    }
+
+    const video = await Video.create({
+      title,
+      description,
+      videoUrl,
+      thumbnailUrl,
+      category,
+      channelId,
+      uploader: req.user.id, // from auth middleware
+    });
+
+    const populated = await video.populate("uploader", "username");
+
+    res.status(201).json(populated);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to upload video" });
+  }
+});
+
+/**
  * GET SINGLE VIDEO BY ID (VIDEO PLAYER)
  * GET /api/videos/:id
  */

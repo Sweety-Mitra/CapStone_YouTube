@@ -224,36 +224,8 @@
   color: var(--text);
 }
 
-/* ===== Comments Section Styles ===== */
 
-.comments-section {
-  margin-top: 1rem;
-}
 
-.comments-section input {
-  width: 70%;
-  padding: 0.4rem;
-  margin-right: 0.5rem;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.comments-section button {
-  cursor: pointer;
-  color: var(--text);
-}
-
-.comments-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.comments-section li {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-}
 
 /* ===== Auth Pages ===== */
 

@@ -12,7 +12,10 @@ const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/video/:id" element={<VideoPlayerDetails />} />
+      <Route
+        path="/video/:id"
+        element={<VideoPlayerDetails key={window.location.pathname} />}
+      />
       <Route path="/channel" element={<Channel />} />
     </Routes>
   );

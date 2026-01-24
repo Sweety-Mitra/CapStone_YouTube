@@ -111,3 +111,35 @@ cd server
 ```bash
 npm install
 ```
+
+---
+
+## 📝 User Registration Instructions
+
+### 👤 Create a New Account
+
+To access protected features such as **channels, video uploads, likes, and comments**, users must register an account.
+
+### 🔗 Registration Flow
+1. Navigate to the **Register** page from the header or login screen.
+2. Fill in the registration form with the required details.
+3. Submit the form to create an account.
+
+---
+
+### 📋 Required Fields & Validation Rules
+
+| Field | Validation Rules |
+|------|------------------|
+| **Username** | Must be at least **3 characters long** |
+| **Email** | Must be a **valid email address** |
+| **Password** | Minimum **8 characters**, must include: <br>• One uppercase letter <br>• One lowercase letter <br>• One number <br>• One special character |
+| **Confirm Password** | Must **match the password** |
+| **Avatar URL (Optional)** | Valid image URL for profile picture |
+
+---
+
+👤 Demo User 
+
+Email : sweety.mitra2002@gmail.com
+Password : Sweety@20

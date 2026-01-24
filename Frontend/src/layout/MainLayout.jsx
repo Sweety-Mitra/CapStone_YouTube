@@ -1,18 +1,26 @@
 // It includes Header + Sidebar + Page Content
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/header/Header";
 import Sidebar from "../components/sidebar/Sidebar";
 
 const MainLayout = ({ children }) => {
   // State to control sidebar visibility
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(
+  window.innerWidth > 1024   // desktop open, mobile closed
+);
   const [searchText, setSearchText] = useState("");
 
   // Toggle function passed to Header
   const toggleSidebar = () => {
     setShowSidebar((prev) => !prev);
   };
+
+  useEffect(() => {
+  if (typeof window !== "undefined" && window.innerWidth <= 1024) {
+    document.body.classList.toggle("sidebar-open", showSidebar);
+  }
+}, [showSidebar]);
 
   return (
     <>
@@ -22,8 +30,12 @@ const MainLayout = ({ children }) => {
         setSearchText={setSearchText}
       />
 
-      <div style={{ display: "flex" }}>
-        {showSidebar && <Sidebar />}
+      <div
+        className={`layout-wrapper ${
+          showSidebar ? "sidebar-open" : "sidebar-closed"
+        }`}
+      >
+        <Sidebar onItemClick={() => setShowSidebar(false)} />
 
         <main style={{ padding: "1rem", flex: 1 }}>
           {children}

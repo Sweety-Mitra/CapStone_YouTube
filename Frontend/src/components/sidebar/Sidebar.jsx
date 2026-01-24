@@ -8,7 +8,6 @@ import {
   MdWatchLater,
   MdThumbUp,
 } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
 
 const Sidebar = () => {
   const user = JSON.parse(localStorage.getItem("user"));

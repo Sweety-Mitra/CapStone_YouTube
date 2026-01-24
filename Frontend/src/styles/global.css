@@ -1,3 +1,8 @@
+html,
+body {
+  overflow-x: hidden;
+}
+
 /* ===== YouTube Header Styles ===== */
 
 .yt-header {
@@ -93,17 +98,33 @@
 }
 
 .signin-btn {
-  border: 1px solid var(--accent);
-  background: var(--surface);
-  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
   padding: 6px 14px;
-  border-radius: 20px;
-  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid #1a73e8;   /* YouTube blue */
+  background: transparent;
+  color: #1a73e8;
+  font-size: 14px;
   font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Hover like YouTube */
 .signin-btn:hover {
-  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  background: rgba(26, 115, 232, 0.1);
+}
+
+/* Active (click) */
+.signin-btn:active {
+  background: rgba(26, 115, 232, 0.2);
+}
+
+/* Remove ugly focus outline */
+.signin-btn:focus {
+  outline: none;
 }
 
 .logout-btn {
@@ -125,6 +146,21 @@
   overflow-y: auto;
   box-sizing: border-box;
   color: var(--text);
+  transition: width 0.25s ease;
+}
+
+/* ===== DESKTOP & IPAD SIDEBAR COLLAPSE (YouTube-style) ===== */
+
+/* default open */
+.sidebar-open .yt-sidebar {
+  width: 220px;
+}
+
+/* collapsed */
+.sidebar-closed .yt-sidebar {
+  width: 0px; 
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 /* Sidebar item */
@@ -186,6 +222,21 @@
   color: var(--muted);
   padding: 0 12px 8px;
 }
+
+/* Hide text when sidebar is collapsed */
+.sidebar-closed .sidebar-item {
+  justify-content: center;
+}
+
+.sidebar-closed .sidebar-item svg {
+  margin: 0;
+}
+
+.sidebar-closed .sidebar-item span,
+.sidebar-closed .sidebar-item:not(.icon) {
+  display: none;
+}
+
 
 /* ===== Filter Bar Styles ===== */
 
@@ -511,39 +562,10 @@ body,
   opacity: 0.85;
 }
 
-/* ================= HEADER RESPONSIVE FIX ================= */
-
-@media (max-width: 1024px) {
-  .yt-header {
-    padding: 8px 12px;
-    width: 100%;
-  }
-
-  .yt-header-center {
-    width: 100%;
-    max-width: none;
-    margin: 0 8px;
-  }
-}
-
-@media (max-width: 768px) {
-
-  .yt-header {
-    padding: 8px 12px;
-    width: 100%;
-  }
-
-  .yt-header-center {
-    display: block
-  }
-
-  .yt-header-left {
-    gap: 10px;
-  }
-
-  .yt-header-right {
-    gap: 8px;
-  }
+/* ===== LAYOUT WRAPPER ===== */
+.layout-wrapper {
+  display: flex;
+  width: 100%;
 }
 
 /* Header must always be clickable */
@@ -556,4 +578,153 @@ body,
 .menu-btn {
   position: relative;
   z-index: 1300;
+}
+
+.video-grid {
+  display: grid;
+  gap: 16px;
+  max-width: 1280px;   
+  margin: 0 auto;     
+}
+
+.video-grid {
+  align-items: stretch;
+}
+
+.video-grid > * {
+  width: 100%;
+  min-width: 0;
+}
+
+.video-card-link {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* .layout-wrapper {
+  overflow-x: hidden;
+}
+
+.layout-wrapper > * {
+  min-width: 0;
+}
+
+main {
+  width: 100%;
+  overflow-x: hidden;
+} */
+
+.yt-logo {
+  height: 20px;
+  display: block;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .yt-header {
+    padding: 8px 12px;
+    width: 100%;
+  }
+
+  .yt-header-center {
+    width: 100%;
+    max-width: none;
+    margin: 0 8px;
+  }
+
+  .yt-sidebar {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    height: 100%;
+    z-index: 1200;
+    background: var(--surface);
+  }
+
+  .yt-sidebar {
+    position: fixed;
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .theme-toggle{
+    margin-left: -10px;
+  }
+
+  .signin-btn {
+    width: 60px;
+    margin-right: 30px;
+  }
+
+}
+
+@media (max-width: 767px) {
+
+  /* Header must not overflow */
+  .yt-header {
+  position: sticky;
+  top: 0;
+  z-index: 3000; /* ⬅ higher than sidebar */
+  }
+
+  /* Center must shrink */
+  .yt-header-center {
+    display: flex;
+    flex: 1;
+    min-width: 0;           
+    max-width: 160px;       
+  }
+
+  /* Input must be allowed to shrink */
+  .yt-header-center input {
+    flex: 1;
+    min-width: 0;           /* prevents wrapping */
+  }
+
+  /* Button must never wrap */
+  .yt-header-center button {
+    flex-shrink: 0;
+    width: 10px;
+  }
+
+  .yt-logo{
+    height: 13px;
+    margin-left: -17px;
+  }
+  
+  .filter-bar {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;        
+    gap: 8px;
+  }
+
+  .filter-btn {
+    white-space: nowrap;
+  }
+
+  .theme-toggle{
+    margin-right: -20px;
+  }
+  
+  .video-grid {
+    grid-template-columns: 1fr;
+    padding: 0 12px;
+  }
+
+  html,
+  body {
+  overflow-x: hidden;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+  .video-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

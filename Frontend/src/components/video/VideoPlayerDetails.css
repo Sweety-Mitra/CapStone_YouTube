@@ -261,17 +261,6 @@
   color: var(--muted);
 }
 
-/* MOBILE */
-@media (max-width: 1000px) {
-  .vp-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .vp-recommend {
-    display: none;
-  }
-}
-
 /* RECOMMENDATIONS */
 .vp-recommend {
   display: flex;
@@ -301,25 +290,9 @@
   border-radius: 10px;
 }
 
-/* .vp-rec-title {
-  font-size: 14px;
-  font-weight: 600;
-} */
-
 .vp-rec-channel {
   font-size: 12px;
   color: var(--muted);
-}
-
-/* MOBILE */
-@media (max-width: 1000px) {
-  .vp-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .vp-recommend {
-    display: none;
-  }
 }
 
 .vp-channel-row {
@@ -346,4 +319,103 @@
 
 .vp-react span {
   margin-left: 6px;
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 767px) {
+
+  .vp-root {
+    padding: 8px;
+  }
+
+  .vp-layout {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .vp-card {
+    border-radius: 0;   
+  }
+
+  .vp-video {
+    border-radius: 0;
+  }
+
+  .vp-meta {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .vp-title h2 {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+
+  .vp-title span {
+    font-size: 11px;
+  }
+
+  .vp-reactions {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .vp-react {
+    flex: 1;
+    justify-content: center;
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .vp-desc {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .vp-channel-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .vp-subscribe {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* COMMENTS */
+
+  .vp-comments {
+    padding: 10px 12px;
+  }
+
+  .vp-input {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .vp-input input {
+    width: 100%;
+  }
+
+  .vp-comment {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .vp-comment-body {
+    max-width: 100%;
+  }
+
+  .vp-comment-actions {
+    opacity: 1; /* always visible on mobile */
+    justify-content: flex-end;
+  }
+
+  .vp-comment-actions button {
+    font-size: 13px;
+  }
+
 }

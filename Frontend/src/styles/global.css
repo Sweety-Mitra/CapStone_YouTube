@@ -668,7 +668,7 @@ main {
   .yt-header {
   position: sticky;
   top: 0;
-  z-index: 3000; /* ⬅ higher than sidebar */
+  z-index: 3000; /* higher than sidebar */
   }
 
   /* Center must shrink */
@@ -714,6 +714,28 @@ main {
   .video-grid {
     grid-template-columns: 1fr;
     padding: 0 12px;
+  }
+
+  .yt-sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    height: 100vh;
+    width: 220px;
+    background: var(--surface);
+    z-index: 9999;   /* higher than channel page */
+  }
+
+  .sidebar-closed .yt-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-open .yt-sidebar {
+    transform: translateX(0);
+  }
+
+  .yt-sidebar {
+    transition: transform 0.3s ease;
   }
 
   html,
